@@ -4,42 +4,47 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
-type Abser interface {
-	Abs() float64
+type USB interface {
+	start()
+	end()
 }
 
-type MyFloat float64
-func (f MyFloat) Abs() float64 {
-	if f < 0 {
-		return float64(-f)
-	}
-	return float64(f)
+type Computer struct {
+	name string
 }
 
-type Vertex struct {
-	X, Y float64
+func (c Computer) start() {
+	fmt.Println(c.name, "start")
 }
-func (v *Vertex) Abs() float64 {
-	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+
+func (c Computer) end() {
+	fmt.Println(c.name, "end")
+}
+
+type Phone struct {
+	name string
+}
+
+func (ph Phone) start() {
+	fmt.Println(ph.name, "start")
+}
+
+func (ph Phone) end() {
+	fmt.Println(ph.name, "end")
 }
 
 func main() {
-	var a Abser
-	f := MyFloat(-12)
-	v := Vertex{3, 4}
+	var com Computer = Computer{"三星"}
+	Option(com)
 
-	a = f  // a MyFloat 实现了 Abser
-	a = &v // a *Vertex 实现了 Abser
+	var ph Phone = Phone{"苹果手机"}
+	Option(ph)
 
-	// 下面一行，v 是一个 Vertex（而不是 *Vertex）
-	// 所以没有实现 Abser。
-	// a = v
-
-	fmt.Println(a.Abs())
-	fmt.Println(f.Abs())
-	fmt.Println(v.Abs())
 }
 
+func Option(in USB){
+	in.start()
+	in.end()
+}
